@@ -1,5 +1,4 @@
 def is_tautology(clause):
-    """Check if a clause contains L and ¬L."""
     return any(-lit in clause for lit in clause)
 
 def print_clause(C):
@@ -76,7 +75,6 @@ def DP(K):
                 K = [C for C in K if L not in C]
                 continue
 
-        # RULE III: Resolution
         sat, resolproof = resolution(K)
         proof.extend(["RESOLUTION CALLED:"] + resolproof)
         return sat, proof
@@ -110,7 +108,7 @@ def DPLL(K, proof=None, depth=0):
             proof.append(indent + f"Pure literal {print_clause({L})}")
             return DPLL(assign_literal(K, L, proof, indent), proof, depth)
 
-    L = next(iter(K[0]))   # pick first literal
+    L = next(iter(K[0]))   
     proof.append(indent + f"Split on {print_clause({L})}")
 
     sat, proof = DPLL(assign_literal(K, L, proof, indent), proof, depth + 1)
